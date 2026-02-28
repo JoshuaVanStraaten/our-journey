@@ -1,30 +1,25 @@
+let starSpeed = 0.2;
+
 particlesJS("stars", {
   particles: {
-    number: {
-      value: 120,
-    },
-    color: {
-      value: "#ffffff",
-    },
-    shape: {
-      type: "circle",
-    },
-    opacity: {
-      value: 0.8,
-    },
-    size: {
-      value: 2,
-    },
+    number: { value: 120 },
     move: {
       enable: true,
-      speed: 0.3,
-    },
-  },
-  interactivity: {
-    events: {
-      onhover: {
-        enable: false,
-      },
+      speed: starSpeed,
     },
   },
 });
+
+setTimeout(() => {
+  starSpeed = 0.8;
+
+  particlesJS("stars", {
+    particles: {
+      number: { value: 120 },
+      move: {
+        enable: true,
+        speed: starSpeed,
+      },
+    },
+  });
+}, 5000);

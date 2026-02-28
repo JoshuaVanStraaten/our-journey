@@ -68,3 +68,52 @@ body::before {
   font-size: 30px;
   opacity: 0.2;
 }
+
+.dahlia {
+  position: fixed;
+  font-size: 24px;
+  opacity: 0.15;
+  animation: floatDahlia linear infinite;
+}
+
+@keyframes floatDahlia {
+  from {
+    transform: translateY(100vh);
+  }
+
+  to {
+    transform: translateY(-10vh);
+  }
+}
+
+.cross {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+
+  transform: translate(-50%, -50%);
+
+  opacity: 0.05;
+}
+
+.cross::before,
+.cross::after {
+  content: "";
+  position: absolute;
+  background: #ff99cc;
+  box-shadow: 0 0 20px #ff99cc;
+}
+
+.cross::before {
+  width: 6px;
+  height: 40px;
+  left: 17px;
+}
+
+.cross::after {
+  width: 40px;
+  height: 6px;
+  top: 17px;
+}

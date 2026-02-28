@@ -26,7 +26,13 @@ document.getElementById("enterBtn").onclick = () => {
 
 // Utility function to show hidden sections
 function showSection(id) {
-  document.getElementById(id).classList.remove("hidden");
+  const el = document.getElementById(id);
+
+  el.classList.remove("hidden");
+
+  setTimeout(() => {
+    el.classList.add("visible");
+  }, 100);
 }
 
 // Render timeline dynamically
