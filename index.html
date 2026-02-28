@@ -3,111 +3,2417 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>Our Journey</title>
-
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/animations.css" />
-    <link rel="stylesheet" href="css/timeline.css" />
-
     <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Great+Vibes&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400&display=swap"
       rel="stylesheet"
     />
+    <style>
+      /* ─── Reset & Base ─────────────────────────────────────────── */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
-    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+      body {
+        background: linear-gradient(
+          170deg,
+          #fdf6f0 0%,
+          #fef0e8 30%,
+          #fdf2ed 60%,
+          #f9ede4 100%
+        );
+        overflow-x: hidden;
+        font-family: "Cormorant Garamond", serif;
+        color: #333;
+        min-height: 100vh;
+      }
+
+      /* Paper texture overlay */
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+        pointer-events: none;
+        z-index: 0;
+      }
+
+      /* Scrollbar */
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: rgba(200, 170, 140, 0.3);
+        border-radius: 3px;
+      }
+
+      /* ─── Animations ───────────────────────────────────────────── */
+      @keyframes fade-down {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes fade-in {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes section-reveal {
+        from {
+          opacity: 0;
+          transform: translateY(40px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes cursor-blink {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0;
+        }
+      }
+
+      @keyframes soft-breathe {
+        0%,
+        100% {
+          background: rgba(255, 240, 230, 0);
+        }
+        50% {
+          background: rgba(255, 240, 230, 0.3);
+        }
+      }
+
+      @keyframes firefly-float {
+        0%,
+        100% {
+          transform: translate(0, 0);
+        }
+        25% {
+          transform: translate(15px, -25px);
+        }
+        50% {
+          transform: translate(-10px, -50px);
+        }
+        75% {
+          transform: translate(20px, -20px);
+        }
+      }
+
+      @keyframes firefly-glow {
+        0%,
+        100% {
+          opacity: 0.15;
+        }
+        50% {
+          opacity: 0.7;
+        }
+      }
+
+      @keyframes petal-fall {
+        0% {
+          transform: translateY(-10vh) rotate(0deg);
+          opacity: 0;
+        }
+        10% {
+          opacity: 0.4;
+        }
+        90% {
+          opacity: 0.35;
+        }
+        100% {
+          transform: translateY(110vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+
+      @keyframes heart-pulse {
+        0%,
+        100% {
+          transform: translate(-50%, -50%) scale(1);
+        }
+        50% {
+          transform: translate(-50%, -50%) scale(1.15);
+        }
+      }
+
+      /* ─── Utilities ────────────────────────────────────────────── */
+      .hidden {
+        display: none !important;
+      }
+
+      .reveal-section {
+        opacity: 0;
+        transform: translateY(40px);
+        transition:
+          opacity 1s ease-out,
+          transform 1s ease-out;
+      }
+
+      .reveal-section.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      /* ─── Intro ────────────────────────────────────────────────── */
+      #intro {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding: 40px 24px;
+        position: relative;
+        z-index: 2;
+        animation: soft-breathe 6s ease-in-out infinite;
+      }
+
+      #intro .couple-svg {
+        animation: fade-down 1.2s ease-out;
+        margin-bottom: 32px;
+      }
+
+      #intro h1 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2.2rem, 6vw, 3.8rem);
+        font-weight: 400;
+        color: #5c3a2e;
+        line-height: 1.3;
+        margin-bottom: 8px;
+        animation: fade-down 1.2s ease-out 0.3s both;
+      }
+
+      #intro .subtitle {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(1.1rem, 3vw, 1.5rem);
+        font-style: italic;
+        color: #9c7a6a;
+        margin-bottom: 48px;
+        letter-spacing: 0.02em;
+        animation: fade-down 1.2s ease-out 0.6s both;
+      }
+
+      .enter-btn {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 1.15rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        padding: 16px 44px;
+        border: 2px solid #c9956b;
+        border-radius: 50px;
+        background: transparent;
+        color: #c9956b;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        animation: fade-down 1.2s ease-out 0.9s both;
+      }
+
+      .enter-btn:hover {
+        background: #c9956b;
+        color: #fff;
+      }
+
+      .song-label {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 0.85rem;
+        color: #bfa898;
+        margin-top: 32px;
+        font-style: italic;
+        animation: fade-down 1.2s ease-out 1.2s both;
+      }
+
+      /* ─── Typing Section ───────────────────────────────────────── */
+      #typingSection {
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 40px 24px;
+        position: relative;
+        z-index: 2;
+      }
+
+      #typingSection .typed-text {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(1.4rem, 4vw, 2.2rem);
+        font-style: italic;
+        color: #5c3a2e;
+        text-align: center;
+        line-height: 2;
+        white-space: pre-line;
+        max-width: 600px;
+      }
+
+      .typing-cursor {
+        animation: cursor-blink 1s step-end infinite;
+        color: #c9956b;
+      }
+
+      /* ─── Days Counter ─────────────────────────────────────────── */
+      #counterSection {
+        min-height: 60vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 60px 24px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .counter-label {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+        color: #9c7a6a;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin-bottom: 28px;
+      }
+
+      .counter-units {
+        display: flex;
+        gap: clamp(12px, 4vw, 24px);
+        justify-content: center;
+        align-items: flex-end;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+      }
+
+      .counter-unit {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        animation: fade-down 0.8s ease-out both;
+      }
+
+      .counter-unit-value {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(2.8rem, 9vw, 4.5rem);
+        font-weight: 700;
+        color: #5c3a2e;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 14px;
+        min-width: clamp(56px, 16vw, 88px);
+        padding: 8px 14px;
+        text-align: center;
+        box-shadow: 0 4px 20px rgba(180, 130, 90, 0.1);
+        border: 1px solid rgba(200, 170, 140, 0.2);
+        line-height: 1.2;
+      }
+
+      .counter-unit-label {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(0.8rem, 2vw, 0.95rem);
+        color: #bfa898;
+        margin-top: 8px;
+        font-style: italic;
+        letter-spacing: 0.05em;
+      }
+
+      .counter-and {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(1.2rem, 3vw, 1.5rem);
+        color: #c9956b;
+        font-style: italic;
+        padding-bottom: 18px;
+        opacity: 0.6;
+      }
+
+      .counter-subtitle {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(1.2rem, 3vw, 1.6rem);
+        color: #c9956b;
+        font-style: italic;
+      }
+
+      /* ─── Love Message ─────────────────────────────────────────── */
+      #messageSection {
+        padding: 80px 24px;
+        display: flex;
+        justify-content: center;
+        position: relative;
+        z-index: 2;
+      }
+
+      .message-card {
+        max-width: 560px;
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-radius: 24px;
+        padding: clamp(28px, 6vw, 48px);
+        box-shadow: 0 8px 40px rgba(180, 130, 90, 0.1);
+        border: 1px solid rgba(200, 170, 140, 0.2);
+        position: relative;
+        overflow: hidden;
+      }
+
+      .message-card .quote-mark {
+        position: absolute;
+        top: 12px;
+        right: 16px;
+        font-family: "Playfair Display", serif;
+        font-size: 48px;
+        color: rgba(201, 149, 107, 0.1);
+        line-height: 1;
+      }
+
+      .message-card h2 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.4rem, 4vw, 1.8rem);
+        font-weight: 400;
+        color: #5c3a2e;
+        margin-bottom: 24px;
+      }
+
+      .message-card .message-body {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(1.05rem, 2.8vw, 1.25rem);
+        color: #6b5548;
+        line-height: 1.9;
+      }
+
+      .message-card .message-body p {
+        margin-bottom: 16px;
+      }
+
+      .message-card .signature {
+        font-style: italic;
+        color: #c9956b;
+        margin-top: 24px;
+      }
+
+      /* ─── Storybook Timeline ───────────────────────────────────── */
+      #timelineSection {
+        padding: 60px 24px 80px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .section-label {
+        text-align: center;
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+        color: #9c7a6a;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin-bottom: 32px;
+      }
+
+      .book-container {
+        max-width: 480px;
+        margin: 0 auto;
+        perspective: 1200px;
+        position: relative;
+        min-height: 370px;
+      }
+
+      .book-page {
+        max-width: 480px;
+        width: 100%;
+        background: rgba(255, 252, 248, 0.9);
+        border-radius: 4px 20px 20px 4px;
+        border: 1px solid rgba(200, 170, 140, 0.3);
+        box-shadow:
+          0 12px 48px rgba(140, 100, 70, 0.12),
+          inset 0 1px 0 rgba(255, 255, 255, 0.8);
+        padding: clamp(28px, 6vw, 44px);
+        min-height: 340px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+        transform-origin: left center;
+        backface-visibility: hidden;
+        transition: none;
+      }
+
+      /* Page flip forward — current page lifts and turns right-to-left */
+      .book-page.flip-out-fwd {
+        animation: page-flip-out 1.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        z-index: 5;
+      }
+      .book-page.flip-in-fwd {
+        animation: page-flip-in 1.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        z-index: 4;
+      }
+
+      /* Page flip backward */
+      .book-page.flip-out-back {
+        animation: page-unflip-out 1.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        z-index: 5;
+      }
+      .book-page.flip-in-back {
+        animation: page-unflip-in 1.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        z-index: 4;
+      }
+
+      @keyframes page-flip-out {
+        0% {
+          transform: rotateY(0deg);
+          opacity: 1;
+          box-shadow: 0 12px 48px rgba(140, 100, 70, 0.12);
+        }
+        40% {
+          opacity: 1;
+        }
+        100% {
+          transform: rotateY(-105deg);
+          opacity: 0;
+          box-shadow: -8px 8px 24px rgba(100, 70, 40, 0.2);
+        }
+      }
+
+      @keyframes page-flip-in {
+        0% {
+          transform: rotateY(40deg);
+          opacity: 0;
+        }
+        30% {
+          opacity: 1;
+        }
+        100% {
+          transform: rotateY(0deg);
+          opacity: 1;
+          box-shadow: 0 12px 48px rgba(140, 100, 70, 0.12);
+        }
+      }
+
+      @keyframes page-unflip-out {
+        0% {
+          transform: rotateY(0deg);
+          opacity: 1;
+        }
+        40% {
+          opacity: 1;
+        }
+        100% {
+          transform: rotateY(105deg);
+          opacity: 0;
+          box-shadow: 8px 8px 24px rgba(100, 70, 40, 0.2);
+        }
+      }
+
+      @keyframes page-unflip-in {
+        0% {
+          transform: rotateY(-40deg);
+          opacity: 0;
+        }
+        30% {
+          opacity: 1;
+        }
+        100% {
+          transform: rotateY(0deg);
+          opacity: 1;
+        }
+      }
+
+      /* Stacked page edges behind the active page */
+      .book-container::before,
+      .book-container::after {
+        content: "";
+        position: absolute;
+        top: 4px;
+        bottom: 4px;
+        right: -3px;
+        width: 4px;
+        border-radius: 0 4px 4px 0;
+        background: rgba(220, 200, 180, 0.25);
+        z-index: 1;
+        pointer-events: none;
+      }
+
+      .book-container::before {
+        transform: translateX(3px);
+      }
+
+      .book-container::after {
+        background: rgba(210, 190, 170, 0.15);
+        transform: translateX(7px);
+        top: 8px;
+        bottom: 8px;
+      }
+
+      /* Page texture lines */
+      .book-page::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+          transparent,
+          transparent 31px,
+          rgba(200, 180, 160, 0.08) 31px,
+          rgba(200, 180, 160, 0.08) 32px
+        );
+        pointer-events: none;
+      }
+
+      /* Spine shadow */
+      .book-page::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 8px;
+        background: linear-gradient(
+          to right,
+          rgba(160, 130, 100, 0.18),
+          transparent
+        );
+        border-radius: 4px 0 0 4px;
+      }
+
+      .book-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .book-chapter {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 0.85rem;
+        color: #bfa898;
+        font-style: italic;
+      }
+
+      .book-emoji {
+        font-size: 28px;
+      }
+
+      .book-title {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.5rem, 4.5vw, 2rem);
+        font-weight: 400;
+        color: #5c3a2e;
+        margin-bottom: 8px;
+        line-height: 1.3;
+        position: relative;
+        z-index: 1;
+      }
+
+      .book-date {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 0.95rem;
+        color: #c9956b;
+        font-style: italic;
+        margin-bottom: 24px;
+        position: relative;
+        z-index: 1;
+      }
+
+      .book-text {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(1.05rem, 2.8vw, 1.2rem);
+        color: #6b5548;
+        line-height: 1.85;
+        position: relative;
+        z-index: 1;
+      }
+
+      .book-page-num {
+        text-align: center;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 0.85rem;
+        color: #bfa898;
+        margin-top: 28px;
+        position: relative;
+        z-index: 1;
+      }
+
+      /* Book navigation */
+      .book-nav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        margin-top: 28px;
+      }
+
+      .book-nav-btn {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 0.9rem;
+        padding: 8px 18px;
+        border: 1.5px solid rgba(200, 170, 140, 0.3);
+        border-radius: 20px;
+        background: transparent;
+        color: #9c7a6a;
+        cursor: pointer;
+        transition: all 0.3s ease;
+      }
+
+      .book-nav-btn:hover {
+        background: rgba(201, 149, 107, 0.1);
+      }
+      .book-nav-btn:disabled {
+        color: #d4c4b8;
+        cursor: default;
+      }
+      .book-nav-btn:disabled:hover {
+        background: transparent;
+      }
+
+      .book-dots {
+        display: flex;
+        gap: 6px;
+      }
+
+      .book-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 4px;
+        border: none;
+        background: rgba(200, 170, 140, 0.3);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 0;
+      }
+
+      .book-dot.active {
+        width: 20px;
+        background: #c9956b;
+      }
+
+      /* Auto-play progress */
+      .book-progress {
+        width: 80px;
+        height: 2px;
+        background: rgba(200, 170, 140, 0.15);
+        border-radius: 1px;
+        margin: 16px auto 0;
+        overflow: hidden;
+      }
+
+      .book-progress-bar {
+        height: 100%;
+        background: #c9956b;
+        border-radius: 1px;
+        width: 0%;
+        animation: carousel-fill 5s linear infinite;
+      }
+
+      .book-progress-bar.paused {
+        animation-play-state: paused;
+      }
+
+      .swipe-hint {
+        text-align: center;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 0.8rem;
+        color: #bfa898;
+        margin-top: 12px;
+        font-style: italic;
+      }
+
+      /* ─── Photo Carousel ──────────────────────────────────────── */
+      #gallerySection {
+        padding: 60px 0 40px;
+        position: relative;
+        z-index: 2;
+        overflow: hidden;
+      }
+
+      .carousel-wrapper {
+        position: relative;
+        width: 100%;
+        padding: 20px 0 30px;
+      }
+
+      .carousel-track {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        height: clamp(320px, 75vw, 440px);
+      }
+
+      .carousel-slide {
+        position: absolute;
+        transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+        cursor: pointer;
+        will-change: transform, opacity;
+      }
+
+      /* Polaroid-style frame */
+      .polaroid {
+        background: #fff;
+        padding: 8px 8px 36px 8px;
+        border-radius: 4px;
+        box-shadow:
+          0 8px 32px rgba(140, 100, 70, 0.15),
+          0 2px 8px rgba(0, 0, 0, 0.06);
+        position: relative;
+        transition: box-shadow 0.7s ease;
+      }
+
+      .carousel-slide.active .polaroid {
+        box-shadow:
+          0 16px 48px rgba(140, 100, 70, 0.22),
+          0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+
+      .polaroid-img {
+        width: clamp(200px, 52vw, 280px);
+        height: clamp(240px, 62vw, 320px);
+        object-fit: cover;
+        display: block;
+        border-radius: 2px;
+      }
+
+      .polaroid-caption {
+        position: absolute;
+        bottom: 8px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 0.85rem;
+        font-style: italic;
+        color: #bfa898;
+      }
+
+      .polaroid-placeholder {
+        width: clamp(200px, 52vw, 280px);
+        height: clamp(240px, 62vw, 320px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #f5ebe0, #fdf0e6);
+        border-radius: 2px;
+      }
+
+      .polaroid-placeholder .icon {
+        font-size: 32px;
+        margin-bottom: 8px;
+      }
+      .polaroid-placeholder .label {
+        font-style: italic;
+        font-size: 0.9rem;
+        color: #bfa898;
+        font-family: "Cormorant Garamond", serif;
+      }
+
+      /* Carousel nav */
+      .carousel-nav {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+        margin-top: 8px;
+      }
+
+      .carousel-arrow {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(200, 170, 140, 0.3);
+        background: rgba(255, 252, 248, 0.8);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        color: #9c7a6a;
+        transition: all 0.3s ease;
+        font-family: "Cormorant Garamond", serif;
+      }
+
+      .carousel-arrow:hover {
+        background: rgba(201, 149, 107, 0.12);
+      }
+
+      .carousel-dots {
+        display: flex;
+        gap: 6px;
+        align-items: center;
+      }
+
+      .carousel-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(200, 170, 140, 0.25);
+        cursor: pointer;
+        transition: all 0.4s ease;
+        padding: 0;
+      }
+
+      .carousel-dot.active {
+        width: 18px;
+        border-radius: 3px;
+        background: #c9956b;
+      }
+
+      .carousel-counter {
+        text-align: center;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 0.8rem;
+        color: #bfa898;
+        font-style: italic;
+        margin-top: 12px;
+      }
+
+      /* Auto-scroll progress bar */
+      .carousel-progress {
+        width: 60px;
+        height: 2px;
+        background: rgba(200, 170, 140, 0.15);
+        border-radius: 1px;
+        margin: 12px auto 0;
+        overflow: hidden;
+      }
+
+      .carousel-progress-bar {
+        height: 100%;
+        background: #c9956b;
+        border-radius: 1px;
+        width: 0%;
+        animation: carousel-fill 4s linear infinite;
+      }
+
+      .carousel-progress-bar.paused {
+        animation-play-state: paused;
+      }
+
+      @keyframes carousel-fill {
+        from {
+          width: 0%;
+        }
+        to {
+          width: 100%;
+        }
+      }
+
+      /* Lightbox */
+      .lightbox {
+        position: fixed;
+        inset: 0;
+        background: rgba(40, 25, 15, 0.92);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        z-index: 200;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        animation: fade-in 0.3s ease-out;
+      }
+
+      .lightbox img {
+        max-width: 92%;
+        max-height: 88vh;
+        border-radius: 16px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      }
+
+      /* ─── Scripture Section ─────────────────────────────────────── */
+      #versesSection {
+        padding: 80px 24px;
+        text-align: center;
+        position: relative;
+        z-index: 2;
+      }
+
+      .cross-watermark {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+        opacity: 0.12;
+      }
+
+      .verse-container {
+        max-width: 560px;
+        margin: 0 auto;
+        min-height: 180px;
+        position: relative;
+      }
+
+      .verse-item {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.8s ease;
+        pointer-events: none;
+      }
+
+      .verse-item.active {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+        position: relative;
+      }
+
+      .verse-text {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(1.15rem, 3vw, 1.45rem);
+        font-style: italic;
+        color: #5c3a2e;
+        line-height: 1.85;
+        margin-bottom: 16px;
+      }
+
+      .verse-ref {
+        font-family: "Playfair Display", serif;
+        font-size: 0.9rem;
+        color: #c9956b;
+      }
+
+      .verse-dots {
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        margin-top: 32px;
+      }
+
+      .verse-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        border: none;
+        background: rgba(200, 170, 140, 0.25);
+        cursor: pointer;
+        transition: all 0.3s ease;
+        padding: 0;
+      }
+
+      .verse-dot.active {
+        background: #c9956b;
+      }
+
+      /* ─── Final Section ────────────────────────────────────────── */
+      #finalSection {
+        min-height: 70vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 80px 24px;
+        text-align: center;
+        position: relative;
+        z-index: 2;
+      }
+
+      #finalSection h2 {
+        font-family: "Playfair Display", serif;
+        font-size: clamp(1.6rem, 5vw, 2.4rem);
+        font-weight: 400;
+        color: #5c3a2e;
+        line-height: 1.5;
+        max-width: 500px;
+        margin-bottom: 20px;
+      }
+
+      .final-line {
+        width: 60px;
+        height: 2px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          #c9956b,
+          transparent
+        );
+        margin: 20px auto;
+      }
+
+      #finalSection .closing {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(1rem, 2.5vw, 1.2rem);
+        font-style: italic;
+        color: #9c7a6a;
+      }
+
+      /* ─── Dividers ─────────────────────────────────────────────── */
+      .divider {
+        display: flex;
+        justify-content: center;
+        padding: 10px 0 30px;
+        position: relative;
+        z-index: 2;
+      }
+
+      .divider-inner {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .divider-line {
+        width: 40px;
+        height: 1px;
+        background: rgba(200, 170, 140, 0.3);
+      }
+
+      .divider-icon {
+        color: #c9956b;
+        opacity: 0.3;
+        font-size: 14px;
+      }
+
+      /* ─── Music Toggle ─────────────────────────────────────────── */
+      .music-toggle {
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        z-index: 100;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: 2px solid rgba(200, 150, 107, 0.4);
+        background: rgba(255, 245, 238, 0.9);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        box-shadow: 0 4px 20px rgba(180, 130, 90, 0.15);
+        transition: all 0.3s ease;
+      }
+
+      .music-toggle:hover {
+        transform: scale(1.1);
+      }
+
+      /* ─── Fireflies ────────────────────────────────────────────── */
+      .fireflies-container {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .firefly {
+        position: absolute;
+        border-radius: 50%;
+        background: radial-gradient(circle, #ffeaa7, #f8d56b);
+      }
+
+      /* ─── Falling Petals ───────────────────────────────────────── */
+      .petals-container {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: 1;
+        overflow: hidden;
+      }
+
+      .petal {
+        position: absolute;
+        top: -5%;
+      }
+
+      /* ─── Footer ───────────────────────────────────────────────── */
+      .footer {
+        text-align: center;
+        padding: 40px 24px 60px;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 0.8rem;
+        color: #bfa898;
+        font-style: italic;
+        position: relative;
+        z-index: 2;
+      }
+    </style>
   </head>
 
   <body>
-    <div class="cross"></div>
-    <div id="heaven"></div>
-    <div id="stars"></div>
-
-    <section id="intro" class="center">
-      <h1 class="title">
-        Our Story<br />
-        Written by God
-      </h1>
-
-      <button id="enterBtn" class="enter-btn">Tap to Begin Our Journey</button>
-    </section>
-
-    <section id="typingSection" class="hidden center fade-in">
-      <div id="typed"></div>
-    </section>
-
-    <section id="counterSection" class="hidden center fade-in">
-      <h2>Our Time Together</h2>
-      <div id="counter"></div>
-    </section>
-
-    <section id="messageSection" class="hidden fade-in">
-      <div class="card">
-        <h2>To My Love</h2>
-
-        <p>
-          Hi my love,<br /><br />
-
-          I want you to know how important you are to me. You've brought so much
-          joy into my life and pushed me to become a better man in every way. I
-          learn so much from you and I have grown deeper in my faith alongside
-          you. I am so grateful for you in my life.
-        </p>
-      </div>
-    </section>
-
-    <section id="timelineSection" class="hidden fade-in">
-      <h2>Our Journey</h2>
-
-      <div id="timeline"></div>
-    </section>
-
-    <section id="gallerySection" class="hidden fade-in">
-      <h2>Our Memories</h2>
-
-      <div class="gallery">
-        <img src="assets/photos/1.jpg" />
-        <img src="assets/photos/2.jpg" />
-        <img src="assets/photos/3.jpg" />
-        <img src="assets/photos/4.jpg" />
-        <img src="assets/photos/5.jpg" />
-        <img src="assets/photos/6.jpg" />
-        <img src="assets/photos/7.jpg" />
-        <img src="assets/photos/8.jpg" />
-        <img src="assets/photos/9.jpg" />
-        <img src="assets/photos/10.jpg" />
-        <img src="assets/photos/11.jpg" />
-        <img src="assets/photos/12.jpg" />
-        <img src="assets/photos/13.jpg" />
-        <img src="assets/photos/14.jpg" />
-      </div>
-    </section>
-
-    <section id="versesSection" class="hidden fade-in">
-      <h2>God at the Center</h2>
-
-      <div id="verses"></div>
-    </section>
-
-    <section id="finalSection" class="hidden center fade-in">
-      <h2>
-        I choose you now and forever,<br />
-        and thank God for you everyday.
-      </h2>
-    </section>
-
-    <script src="data/config.js"></script>
-    <script src="data/timeline.js"></script>
-    <script src="data/verses.js"></script>
-
-    <script src="js/main.js"></script>
-    <script src="js/typing.js"></script>
-    <script src="js/countdown.js"></script>
-    <script src="js/gallery.js"></script>
-    <script src="js/stars.js"></script>
-    <audio id="music" loop>
-      <source src="assets/music/until-i-found-you.mp3" type="audio/mp3" />
+    <!-- ─── Audio ──────────────────────────────────────────────── -->
+    <audio id="music" loop preload="auto">
+      <source src="assets/music/until-i-found-you.mp3" type="audio/mpeg" />
     </audio>
+
+    <!-- ─── Fireflies Container ────────────────────────────────── -->
+    <div class="fireflies-container hidden" id="fireflies"></div>
+
+    <!-- ─── Falling Petals Container ───────────────────────────── -->
+    <div class="petals-container hidden" id="petals"></div>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- INTRO SCREEN                                               -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section id="intro">
+      <div class="couple-svg">
+        <svg viewBox="0 0 200 200" style="width: 100%; max-width: 180px">
+          <circle cx="75" cy="60" r="16" fill="#d4a574" />
+          <rect x="63" y="76" width="24" height="35" rx="12" fill="#5b7a8a" />
+          <rect x="60" y="111" width="12" height="28" rx="6" fill="#4a6670" />
+          <rect x="78" y="111" width="12" height="28" rx="6" fill="#4a6670" />
+          <ellipse cx="75" cy="48" rx="14" ry="6" fill="#3d2b1f" />
+          <circle cx="70" cy="58" r="1.5" fill="#333" />
+          <circle cx="80" cy="58" r="1.5" fill="#333" />
+          <path
+            d="M72 65 Q75 68 78 65"
+            fill="none"
+            stroke="#333"
+            stroke-width="1.2"
+            stroke-linecap="round"
+          />
+          <circle cx="125" cy="55" r="16" fill="#e8c4a8" />
+          <rect x="113" y="71" width="24" height="38" rx="12" fill="#e8a0b4" />
+          <rect x="110" y="109" width="12" height="28" rx="6" fill="#d4899e" />
+          <rect x="128" y="109" width="12" height="28" rx="6" fill="#d4899e" />
+          <ellipse cx="125" cy="42" rx="18" ry="8" fill="#5c3a1e" />
+          <ellipse cx="110" cy="55" rx="5" ry="16" fill="#5c3a1e" />
+          <ellipse cx="140" cy="55" rx="5" ry="16" fill="#5c3a1e" />
+          <circle cx="120" cy="53" r="1.5" fill="#333" />
+          <circle cx="130" cy="53" r="1.5" fill="#333" />
+          <path
+            d="M122 60 Q125 63 128 60"
+            fill="none"
+            stroke="#333"
+            stroke-width="1.2"
+            stroke-linecap="round"
+          />
+          <path
+            d="M87 95 Q100 100 113 95"
+            fill="none"
+            stroke="#d4a574"
+            stroke-width="4"
+            stroke-linecap="round"
+          />
+          <g>
+            <animateTransform
+              attributeName="transform"
+              type="scale"
+              values="1;1.15;1"
+              dur="2s"
+              repeatCount="indefinite"
+              additive="sum"
+            />
+            <animateTransform
+              attributeName="transform"
+              type="translate"
+              values="0,0;-7.5,-4.5;0,0"
+              dur="2s"
+              repeatCount="indefinite"
+              additive="sum"
+            />
+            <path
+              d="M100 30 C100 24 90 18 90 26 C90 32 100 38 100 38 C100 38 110 32 110 26 C110 18 100 24 100 30Z"
+              fill="#e8707e"
+              opacity="0.8"
+            />
+          </g>
+        </svg>
+      </div>
+
+      <h1>Our Story</h1>
+      <p class="subtitle">Written by God. Lived by us.</p>
+      <button class="enter-btn" id="enterBtn">Open Our Story ♡</button>
+      <p class="song-label">♪ Until I Found You — Stephen Sanchez</p>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- TYPING SECTION                                             -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <section id="typingSection" class="hidden">
+      <p class="typed-text" id="typedText"></p>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- MAIN CONTENT (hidden until typing finishes)                -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <div id="mainContent" class="hidden">
+      <!-- Days Counter -->
+      <section id="counterSection" class="reveal-section">
+        <p class="counter-label">Our Time Together</p>
+        <div class="counter-units" id="counterUnits"></div>
+        <p class="counter-subtitle">and counting ♡</p>
+      </section>
+
+      <!-- Divider -->
+      <div class="divider">
+        <div class="divider-inner">
+          <div class="divider-line"></div>
+          <svg
+            viewBox="0 0 40 40"
+            style="width: 18px; height: 18px; opacity: 0.25"
+          >
+            <ellipse
+              cx="20"
+              cy="10"
+              rx="5"
+              ry="10"
+              fill="#f0a0b8"
+              opacity="0.7"
+              transform="rotate(0 20 20)"
+            />
+            <ellipse
+              cx="20"
+              cy="10"
+              rx="5"
+              ry="10"
+              fill="#e88aa4"
+              opacity="0.7"
+              transform="rotate(45 20 20)"
+            />
+            <ellipse
+              cx="20"
+              cy="10"
+              rx="5"
+              ry="10"
+              fill="#f0a0b8"
+              opacity="0.7"
+              transform="rotate(90 20 20)"
+            />
+            <ellipse
+              cx="20"
+              cy="10"
+              rx="5"
+              ry="10"
+              fill="#e88aa4"
+              opacity="0.7"
+              transform="rotate(135 20 20)"
+            />
+            <ellipse
+              cx="20"
+              cy="10"
+              rx="5"
+              ry="10"
+              fill="#f0a0b8"
+              opacity="0.7"
+              transform="rotate(180 20 20)"
+            />
+            <ellipse
+              cx="20"
+              cy="10"
+              rx="5"
+              ry="10"
+              fill="#e88aa4"
+              opacity="0.7"
+              transform="rotate(225 20 20)"
+            />
+            <ellipse
+              cx="20"
+              cy="10"
+              rx="5"
+              ry="10"
+              fill="#f0a0b8"
+              opacity="0.7"
+              transform="rotate(270 20 20)"
+            />
+            <ellipse
+              cx="20"
+              cy="10"
+              rx="5"
+              ry="10"
+              fill="#e88aa4"
+              opacity="0.7"
+              transform="rotate(315 20 20)"
+            />
+            <circle cx="20" cy="20" r="5" fill="#f5c76b" />
+          </svg>
+          <div class="divider-line"></div>
+        </div>
+      </div>
+
+      <!-- Love Message -->
+      <section id="messageSection" class="reveal-section">
+        <div class="message-card">
+          <div class="quote-mark">❝</div>
+          <h2>To My Love</h2>
+          <div class="message-body">
+            <p>Hi my love,</p>
+            <p>
+              I want you to know how important you are to me. You've brought so
+              much joy into my life and pushed me to become a better man in
+              every way.
+            </p>
+            <p>
+              I learn so much from you and I have grown deeper in my faith
+              alongside you. I am so grateful for you in my life.
+            </p>
+            <p class="signature">— Forever yours, Joshua ♡</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Divider -->
+      <div class="divider">
+        <div class="divider-inner">
+          <div class="divider-line"></div>
+          <span class="divider-icon">♡</span>
+          <div class="divider-line"></div>
+        </div>
+      </div>
+
+      <!-- Storybook Timeline -->
+      <section id="timelineSection" class="reveal-section">
+        <p class="section-label">Our Story — Chapter by Chapter</p>
+        <div class="book-container" id="bookContainer">
+          <div class="book-page" id="bookPage">
+            <div>
+              <div class="book-header">
+                <span class="book-chapter" id="bookChapter"></span>
+                <span class="book-emoji" id="bookEmoji"></span>
+              </div>
+              <h3 class="book-title" id="bookTitle"></h3>
+              <p class="book-date" id="bookDate"></p>
+              <p class="book-text" id="bookText"></p>
+            </div>
+            <p class="book-page-num" id="bookPageNum"></p>
+          </div>
+        </div>
+        <div class="book-nav">
+          <button class="book-nav-btn" id="prevBtn">← Prev</button>
+          <div class="book-dots" id="bookDots"></div>
+          <button class="book-nav-btn" id="nextBtn">Next →</button>
+        </div>
+        <div class="book-progress">
+          <div class="book-progress-bar" id="bookProgress"></div>
+        </div>
+        <p class="swipe-hint">auto-turning ♡ tap arrows or swipe to browse</p>
+      </section>
+
+      <!-- Divider -->
+      <div class="divider">
+        <div class="divider-inner">
+          <div class="divider-line"></div>
+          <svg
+            viewBox="0 0 40 40"
+            style="width: 18px; height: 18px; opacity: 0.25"
+          >
+            <ellipse
+              cx="20"
+              cy="10"
+              rx="5"
+              ry="10"
+              fill="#f0a0b8"
+              opacity="0.7"
+              transform="rotate(0 20 20)"
+            />
+            <ellipse
+              cx="20"
+              cy="10"
+              rx="5"
+              ry="10"
+              fill="#e88aa4"
+              opacity="0.7"
+              transform="rotate(45 20 20)"
+            />
+            <ellipse
+              cx="20"
+              cy="10"
+              rx="5"
+              ry="10"
+              fill="#f0a0b8"
+              opacity="0.7"
+              transform="rotate(90 20 20)"
+            />
+            <ellipse
+              cx="20"
+              cy="10"
+              rx="5"
+              ry="10"
+              fill="#e88aa4"
+              opacity="0.7"
+              transform="rotate(135 20 20)"
+            />
+            <ellipse
+              cx="20"
+              cy="10"
+              rx="5"
+              ry="10"
+              fill="#f0a0b8"
+              opacity="0.7"
+              transform="rotate(180 20 20)"
+            />
+            <ellipse
+              cx="20"
+              cy="10"
+              rx="5"
+              ry="10"
+              fill="#e88aa4"
+              opacity="0.7"
+              transform="rotate(225 20 20)"
+            />
+            <ellipse
+              cx="20"
+              cy="10"
+              rx="5"
+              ry="10"
+              fill="#f0a0b8"
+              opacity="0.7"
+              transform="rotate(270 20 20)"
+            />
+            <ellipse
+              cx="20"
+              cy="10"
+              rx="5"
+              ry="10"
+              fill="#e88aa4"
+              opacity="0.7"
+              transform="rotate(315 20 20)"
+            />
+            <circle cx="20" cy="20" r="5" fill="#f5c76b" />
+          </svg>
+          <div class="divider-line"></div>
+        </div>
+      </div>
+
+      <!-- Photo Carousel -->
+      <section id="gallerySection" class="reveal-section">
+        <p class="section-label" style="padding: 0 24px">Our Memories</p>
+        <div class="carousel-wrapper">
+          <div class="carousel-track" id="carouselTrack"></div>
+        </div>
+        <div class="carousel-nav">
+          <button class="carousel-arrow" id="carouselPrev">‹</button>
+          <div class="carousel-dots" id="carouselDots"></div>
+          <button class="carousel-arrow" id="carouselNext">›</button>
+        </div>
+        <div class="carousel-counter" id="carouselCounter"></div>
+        <div class="carousel-progress">
+          <div class="carousel-progress-bar" id="carouselProgress"></div>
+        </div>
+      </section>
+
+      <!-- Scripture -->
+      <section id="versesSection" class="reveal-section">
+        <div class="cross-watermark">
+          <svg viewBox="0 0 60 80" style="width: 36px; height: 48px">
+            <rect x="24" y="0" width="12" height="80" rx="3" fill="#c9956b" />
+            <rect x="6" y="20" width="48" height="12" rx="3" fill="#c9956b" />
+          </svg>
+        </div>
+        <p class="section-label">God at the Center</p>
+        <div class="verse-container" id="verseContainer"></div>
+        <div class="verse-dots" id="verseDots"></div>
+      </section>
+
+      <!-- Divider -->
+      <div class="divider">
+        <div class="divider-inner">
+          <div class="divider-line"></div>
+          <span class="divider-icon">✝</span>
+          <div class="divider-line"></div>
+        </div>
+      </div>
+
+      <!-- Final Section -->
+      <section id="finalSection" class="reveal-section">
+        <div style="margin-bottom: 32px">
+          <svg viewBox="0 0 200 200" style="width: 100%; max-width: 180px">
+            <circle cx="75" cy="60" r="16" fill="#d4a574" />
+            <rect x="63" y="76" width="24" height="35" rx="12" fill="#5b7a8a" />
+            <rect x="60" y="111" width="12" height="28" rx="6" fill="#4a6670" />
+            <rect x="78" y="111" width="12" height="28" rx="6" fill="#4a6670" />
+            <ellipse cx="75" cy="48" rx="14" ry="6" fill="#3d2b1f" />
+            <circle cx="70" cy="58" r="1.5" fill="#333" />
+            <circle cx="80" cy="58" r="1.5" fill="#333" />
+            <path
+              d="M72 65 Q75 68 78 65"
+              fill="none"
+              stroke="#333"
+              stroke-width="1.2"
+              stroke-linecap="round"
+            />
+            <circle cx="125" cy="55" r="16" fill="#e8c4a8" />
+            <rect
+              x="113"
+              y="71"
+              width="24"
+              height="38"
+              rx="12"
+              fill="#e8a0b4"
+            />
+            <rect
+              x="110"
+              y="109"
+              width="12"
+              height="28"
+              rx="6"
+              fill="#d4899e"
+            />
+            <rect
+              x="128"
+              y="109"
+              width="12"
+              height="28"
+              rx="6"
+              fill="#d4899e"
+            />
+            <ellipse cx="125" cy="42" rx="18" ry="8" fill="#5c3a1e" />
+            <ellipse cx="110" cy="55" rx="5" ry="16" fill="#5c3a1e" />
+            <ellipse cx="140" cy="55" rx="5" ry="16" fill="#5c3a1e" />
+            <circle cx="120" cy="53" r="1.5" fill="#333" />
+            <circle cx="130" cy="53" r="1.5" fill="#333" />
+            <path
+              d="M122 60 Q125 63 128 60"
+              fill="none"
+              stroke="#333"
+              stroke-width="1.2"
+              stroke-linecap="round"
+            />
+            <path
+              d="M87 95 Q100 100 113 95"
+              fill="none"
+              stroke="#d4a574"
+              stroke-width="4"
+              stroke-linecap="round"
+            />
+            <g>
+              <animateTransform
+                attributeName="transform"
+                type="scale"
+                values="1;1.15;1"
+                dur="2s"
+                repeatCount="indefinite"
+                additive="sum"
+              />
+              <animateTransform
+                attributeName="transform"
+                type="translate"
+                values="0,0;-7.5,-4.5;0,0"
+                dur="2s"
+                repeatCount="indefinite"
+                additive="sum"
+              />
+              <path
+                d="M100 30 C100 24 90 18 90 26 C90 32 100 38 100 38 C100 38 110 32 110 26 C110 18 100 24 100 30Z"
+                fill="#e8707e"
+                opacity="0.8"
+              />
+            </g>
+          </svg>
+        </div>
+        <h2>
+          I choose you now and forever,<br />and thank God for you every day.
+        </h2>
+        <div class="final-line"></div>
+        <p class="closing">With all my love — Joshua ♡</p>
+      </section>
+
+      <!-- Footer -->
+      <div class="footer">Built with love for Mariska ♡</div>
+    </div>
+
+    <!-- Music Toggle (hidden until started) -->
+    <button class="music-toggle hidden" id="musicToggle" title="Toggle music">
+      ♪
+    </button>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- DATA                                                       -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <script>
+      // ─── Configuration Data ─────────────────────────────────────
+      const CONFIG = {
+        relationshipStart: "2026-01-29T00:00:00",
+      };
+
+      const TIMELINE = [
+        {
+          date: "15 Dec 2025",
+          title: "The Day We Met",
+          text: "God placed you right in my path — and nothing has been the same since.",
+          emoji: "✨",
+          chapter: 1,
+        },
+        {
+          date: "16 Dec 2025",
+          title: "I Asked You Out",
+          text: "My heart was racing, I stumbled a bit, but the best decision I ever made.",
+          emoji: "💌",
+          chapter: 2,
+        },
+        {
+          date: "17 Dec 2025",
+          title: "First Coffee Date",
+          text: "Only 2 hours of talking but feeling I never wanted it to end.",
+          emoji: "☕",
+          chapter: 3,
+        },
+        {
+          date: "19 Dec 2025",
+          title: "Dinner with your Family",
+          text: "Sharing a meal with laughter and getting to hold your hand for the first time.",
+          emoji: "🍽️",
+          chapter: 4,
+        },
+        {
+          date: "20 Dec 2025",
+          title: "Our Hike Together",
+          text: "Side by side on the trail, nearly falling, but an adventure.",
+          emoji: "⛰️",
+          chapter: 5,
+        },
+        {
+          date: "28 Jan 2026",
+          title: "Meeting Your Family",
+          text: "Nervous hands, warm welcomes — your family made me feel like home.",
+          emoji: "🏡",
+          chapter: 6,
+        },
+        {
+          date: "29 Jan 2026",
+          title: "Sunrise on the Beach",
+          text: "As the sun rose over the water, you became my girlfriend. What an incredible beginning.",
+          emoji: "🌅",
+          chapter: 7,
+        },
+        {
+          date: "30 Jan 2026",
+          title: "Our First Solo Dinner",
+          text: "Just us, some sticky chairs, tables and delicious karage, and the beginning of a thousand more dinners to come.",
+          emoji: "🕯️",
+          chapter: 8,
+        },
+        {
+          date: "20 Feb 2026",
+          title: "Cooking Together",
+          text: "Messy kitchen, amazing teamwork — we make a pretty great duo.",
+          emoji: "👩‍🍳",
+          chapter: 9,
+        },
+        {
+          date: "21 Feb 2026",
+          title: "The Spicy Curry Incident",
+          text: "You survived! Barely. But I loved cooking for you. 🌶️",
+          emoji: "🔥",
+          chapter: 10,
+        },
+      ];
+
+      const VERSES = [
+        {
+          text: "Two are better than one, because they have a good return for their labor: If either of them falls down, one can help the other up... A cord of three strands is not quickly broken.",
+          ref: "Ecclesiastes 4:9–12",
+        },
+        {
+          text: "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to Him, and He will make your paths straight.",
+          ref: "Proverbs 3:5–6",
+        },
+        {
+          text: "Love is patient, love is kind. It does not envy, it does not boast, it is not proud. It always protects, always trusts, always hopes, always perseveres.",
+          ref: "1 Corinthians 13:4–7",
+        },
+        {
+          text: "I have found the one whom my soul loves.",
+          ref: "Song of Solomon 3:4",
+        },
+      ];
+
+      const PHOTOS = [
+        { src: "assets/photos/1.jpg", caption: "our very first date ♡" },
+        { src: "assets/photos/2.jpg", caption: "adventure mode: activated" },
+        { src: "assets/photos/3.jpg", caption: "who's this cutie?" },
+        { src: "assets/photos/4.jpg", caption: "peace homie" },
+        { src: "assets/photos/5.jpg", caption: "that apron though 👨‍🍳" },
+        { src: "assets/photos/6.jpg", caption: "excuse me, gorgeous" },
+        { src: "assets/photos/7.jpg", caption: "the real slim shadies" },
+        { src: "assets/photos/8.jpg", caption: "oulik saam ♡" },
+        { src: "assets/photos/9.jpg", caption: "power couple energy" },
+        { src: "assets/photos/10.jpg", caption: "stop being so cute pls" },
+        { src: "assets/photos/11.jpg", caption: "we need more wagyu tho" },
+        { src: "assets/photos/12.jpg", caption: "the legendary curry 🌶️" },
+        { src: "assets/photos/13.jpg", caption: "slaapies" },
+        { src: "assets/photos/14.jpg", caption: "sweet ride, bro 🚗" },
+      ];
+    </script>
+
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <!-- APP LOGIC                                                  -->
+    <!-- ═══════════════════════════════════════════════════════════ -->
+    <script>
+      // ─── State ──────────────────────────────────────────────────
+      let musicPlaying = false;
+      let currentPage = 0;
+      let isFlipping = false;
+      let activeVerse = 0;
+      let verseInterval = null;
+      let touchStartX = 0;
+
+      // ─── DOM References ─────────────────────────────────────────
+      const $ = (id) => document.getElementById(id);
+
+      // ─── Helpers ────────────────────────────────────────────────
+      function getTimeTogether() {
+        const start = new Date(CONFIG.relationshipStart);
+        const now = new Date();
+
+        let years = now.getFullYear() - start.getFullYear();
+        let months = now.getMonth() - start.getMonth();
+        let days = now.getDate() - start.getDate();
+
+        if (days < 0) {
+          months--;
+          const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+          days += prevMonth.getDate();
+        }
+        if (months < 0) {
+          years--;
+          months += 12;
+        }
+
+        return {
+          years: Math.max(0, years),
+          months: Math.max(0, months),
+          days: Math.max(0, days),
+        };
+      }
+
+      // ─── Fireflies ──────────────────────────────────────────────
+      function createFireflies() {
+        const container = $("fireflies");
+        for (let i = 0; i < 18; i++) {
+          const fly = document.createElement("div");
+          fly.className = "firefly";
+          const size = 3 + Math.random() * 4;
+          const duration = 6 + Math.random() * 10;
+          const delay = Math.random() * 8;
+          fly.style.cssText = `
+          left: ${Math.random() * 100}%;
+          top: ${Math.random() * 100}%;
+          width: ${size}px;
+          height: ${size}px;
+          box-shadow: 0 0 ${size * 2}px ${size}px rgba(248,213,107,0.4);
+          animation: firefly-float ${duration}s ease-in-out infinite, firefly-glow ${duration * 0.6}s ease-in-out infinite;
+          animation-delay: ${delay}s, ${delay + 1}s;
+        `;
+          container.appendChild(fly);
+        }
+      }
+
+      // ─── Falling Petals ─────────────────────────────────────────
+      function createPetals() {
+        const container = $("petals");
+        for (let i = 0; i < 12; i++) {
+          const petal = document.createElement("div");
+          petal.className = "petal";
+          const dur = 12 + Math.random() * 18;
+          const delay = Math.random() * 15;
+          const size = 16 + Math.random() * 12;
+          const rot = Math.random() * 360;
+          petal.style.cssText = `
+          left: ${Math.random() * 100}%;
+          animation: petal-fall ${dur}s linear infinite;
+          animation-delay: ${delay}s;
+        `;
+          // SVG dahlia petal
+          petal.innerHTML = `
+          <svg viewBox="0 0 40 40" style="width:${size}px;height:${size}px;transform:rotate(${rot}deg);opacity:0.35;">
+            ${[0, 45, 90, 135, 180, 225, 270, 315]
+              .map(
+                (angle, j) =>
+                  `<ellipse cx="20" cy="10" rx="5" ry="10" fill="${j % 2 === 0 ? "#f0a0b8" : "#e88aa4"}" opacity="0.7" transform="rotate(${angle} 20 20)"/>`,
+              )
+              .join("")}
+            <circle cx="20" cy="20" r="5" fill="#f5c76b"/>
+          </svg>
+        `;
+          container.appendChild(petal);
+        }
+      }
+
+      // ─── Typewriter ─────────────────────────────────────────────
+      function startTypewriter(lines, callback) {
+        const el = $("typedText");
+        let lineIdx = 0;
+        let charIdx = 0;
+        let text = "";
+        el.innerHTML = '<span class="typing-cursor">|</span>';
+
+        function type() {
+          if (lineIdx >= lines.length) {
+            setTimeout(() => {
+              el.innerHTML = text;
+              callback();
+            }, 1200);
+            return;
+          }
+
+          const currentLine = lines[lineIdx];
+          if (charIdx < currentLine.length) {
+            text += currentLine[charIdx];
+            el.innerHTML = text + '<span class="typing-cursor">|</span>';
+            charIdx++;
+            setTimeout(type, 55);
+          } else {
+            text += "\n";
+            lineIdx++;
+            charIdx = 0;
+            setTimeout(type, 800);
+          }
+        }
+
+        type();
+      }
+
+      // ─── Days Counter ───────────────────────────────────────────
+      function renderCounter() {
+        const { years, months, days } = getTimeTogether();
+        const container = $("counterUnits");
+        container.innerHTML = "";
+
+        const units = [];
+        if (years > 0)
+          units.push({ value: years, label: years === 1 ? "year" : "years" });
+        if (months > 0)
+          units.push({
+            value: months,
+            label: months === 1 ? "month" : "months",
+          });
+        if (days > 0 || units.length === 0)
+          units.push({ value: days, label: days === 1 ? "day" : "days" });
+
+        let animDelay = 0;
+        units.forEach((unit, i) => {
+          // Add "&" between units
+          if (i > 0) {
+            const andEl = document.createElement("span");
+            andEl.className = "counter-and";
+            andEl.textContent = "&";
+            andEl.style.animation = `fade-down 0.8s ease-out ${animDelay}s both`;
+            container.appendChild(andEl);
+            animDelay += 0.1;
+          }
+
+          const unitEl = document.createElement("div");
+          unitEl.className = "counter-unit";
+          unitEl.style.animation = `fade-down 0.8s ease-out ${animDelay}s both`;
+          unitEl.innerHTML = `
+          <div class="counter-unit-value">${unit.value}</div>
+          <div class="counter-unit-label">${unit.label}</div>
+        `;
+          container.appendChild(unitEl);
+          animDelay += 0.15;
+        });
+      }
+
+      // ─── Storybook Timeline ─────────────────────────────────────
+      let bookAutoplay = null;
+      let bookPaused = false;
+
+      function fillBookPage(el, item, pageIndex) {
+        el.querySelector(".book-chapter").textContent =
+          "Chapter " + item.chapter;
+        el.querySelector(".book-emoji").textContent = item.emoji;
+        el.querySelector(".book-title").textContent = item.title;
+        el.querySelector(".book-date").textContent = item.date;
+        el.querySelector(".book-text").textContent = item.text;
+        el.querySelector(".book-page-num").textContent =
+          "— " + (pageIndex + 1) + " of " + TIMELINE.length + " —";
+      }
+
+      function createPageEl() {
+        const page = document.createElement("div");
+        page.className = "book-page";
+        page.innerHTML = `
+        <div>
+          <div class="book-header">
+            <span class="book-chapter"></span>
+            <span class="book-emoji"></span>
+          </div>
+          <h3 class="book-title"></h3>
+          <p class="book-date"></p>
+          <p class="book-text"></p>
+        </div>
+        <p class="book-page-num"></p>
+      `;
+        return page;
+      }
+
+      function renderBookPage() {
+        // Update dots
+        document.querySelectorAll(".book-dot").forEach((dot, i) => {
+          dot.classList.toggle("active", i === currentPage);
+        });
+        // Update buttons
+        $("prevBtn").disabled = currentPage === 0;
+        $("nextBtn").disabled = currentPage === TIMELINE.length - 1;
+      }
+
+      function goToPage(newPage) {
+        if (
+          isFlipping ||
+          newPage < 0 ||
+          newPage >= TIMELINE.length ||
+          newPage === currentPage
+        )
+          return;
+        isFlipping = true;
+
+        const container = $("bookContainer");
+        const oldPage = $("bookPage");
+        const forward = newPage > currentPage;
+
+        // Create new page with new content
+        const newPageEl = createPageEl();
+        newPageEl.id = "bookPageNew";
+        fillBookPage(newPageEl, TIMELINE[newPage], newPage);
+        container.appendChild(newPageEl);
+
+        // Apply flip animations
+        if (forward) {
+          oldPage.classList.add("flip-out-fwd");
+          newPageEl.classList.add("flip-in-fwd");
+        } else {
+          oldPage.classList.add("flip-out-back");
+          newPageEl.classList.add("flip-in-back");
+        }
+
+        // After animation completes, clean up
+        setTimeout(() => {
+          oldPage.remove();
+          newPageEl.id = "bookPage";
+          newPageEl.classList.remove("flip-in-fwd", "flip-in-back");
+          currentPage = newPage;
+          renderBookPage();
+          isFlipping = false;
+        }, 1300);
+
+        // Reset progress bar
+        resetBookProgress();
+      }
+
+      function resetBookProgress() {
+        const bar = $("bookProgress");
+        bar.style.animation = "none";
+        bar.offsetHeight;
+        bar.style.animation = "carousel-fill 5s linear infinite";
+        if (bookPaused) bar.classList.add("paused");
+      }
+
+      function startBookAutoplay() {
+        bookAutoplay = setInterval(() => {
+          if (!bookPaused && !isFlipping) {
+            if (currentPage < TIMELINE.length - 1) {
+              goToPage(currentPage + 1);
+            } else {
+              // Loop back to start
+              goToPage(0);
+            }
+          }
+        }, 5000);
+      }
+
+      function pauseBook() {
+        bookPaused = true;
+        $("bookProgress").classList.add("paused");
+      }
+
+      function resumeBook() {
+        bookPaused = false;
+        $("bookProgress").classList.remove("paused");
+        resetBookProgress();
+      }
+
+      function restartBookAutoplay() {
+        clearInterval(bookAutoplay);
+        resetBookProgress();
+        startBookAutoplay();
+      }
+
+      function initTimeline() {
+        const container = $("bookContainer");
+
+        // Fill initial page
+        fillBookPage($("bookPage"), TIMELINE[0], 0);
+
+        // Create dots
+        const dotsContainer = $("bookDots");
+        TIMELINE.forEach((_, i) => {
+          const dot = document.createElement("button");
+          dot.className = "book-dot" + (i === 0 ? " active" : "");
+          dot.onclick = () => {
+            goToPage(i);
+            restartBookAutoplay();
+          };
+          dotsContainer.appendChild(dot);
+        });
+
+        // Navigation buttons
+        $("prevBtn").onclick = () => {
+          goToPage(currentPage - 1);
+          restartBookAutoplay();
+        };
+        $("nextBtn").onclick = () => {
+          goToPage(currentPage + 1);
+          restartBookAutoplay();
+        };
+
+        // Swipe support
+        container.addEventListener("touchstart", (e) => {
+          touchStartX = e.touches[0].clientX;
+          pauseBook();
+        });
+        container.addEventListener("touchend", (e) => {
+          const diff = touchStartX - e.changedTouches[0].clientX;
+          if (Math.abs(diff) > 50) {
+            if (diff > 0) goToPage(currentPage + 1);
+            else goToPage(currentPage - 1);
+          }
+          resumeBook();
+          restartBookAutoplay();
+        });
+
+        // Pause on hover
+        container.addEventListener("mouseenter", pauseBook);
+        container.addEventListener("mouseleave", () => {
+          resumeBook();
+        });
+
+        renderBookPage();
+        startBookAutoplay();
+      }
+
+      // ─── Photo Carousel ────────────────────────────────────────
+      let carouselIndex = 0;
+      let carouselAutoplay = null;
+      let carouselPaused = false;
+      let carouselTouchStartX = 0;
+
+      function initGallery() {
+        const track = $("carouselTrack");
+        const dotsContainer = $("carouselDots");
+
+        // Create slides
+        PHOTOS.forEach((photo, i) => {
+          const slide = document.createElement("div");
+          slide.className = "carousel-slide";
+          slide.dataset.index = i;
+
+          const polaroid = document.createElement("div");
+          polaroid.className = "polaroid";
+
+          const img = document.createElement("img");
+          img.className = "polaroid-img";
+          img.src = photo.src;
+          img.alt = photo.caption;
+          img.onerror = () => {
+            img.remove();
+            const placeholder = document.createElement("div");
+            placeholder.className = "polaroid-placeholder";
+            placeholder.innerHTML =
+              '<div class="icon">📷</div><div class="label">' +
+              photo.caption +
+              "</div>";
+            polaroid.insertBefore(placeholder, polaroid.firstChild);
+          };
+
+          const caption = document.createElement("div");
+          caption.className = "polaroid-caption";
+          caption.textContent = photo.caption;
+
+          polaroid.appendChild(img);
+          polaroid.appendChild(caption);
+          slide.appendChild(polaroid);
+
+          slide.onclick = () => {
+            if (parseInt(slide.dataset.index) === carouselIndex) {
+              openLightbox(photo.src);
+            } else {
+              goToSlide(parseInt(slide.dataset.index));
+            }
+          };
+
+          track.appendChild(slide);
+
+          // Dot
+          const dot = document.createElement("button");
+          dot.className = "carousel-dot";
+          dot.onclick = () => goToSlide(i);
+          dotsContainer.appendChild(dot);
+        });
+
+        // Swipe support
+        track.addEventListener("touchstart", (e) => {
+          carouselTouchStartX = e.touches[0].clientX;
+          pauseCarousel();
+        });
+        track.addEventListener("touchend", (e) => {
+          const diff = carouselTouchStartX - e.changedTouches[0].clientX;
+          if (Math.abs(diff) > 40) {
+            if (diff > 0) goToSlide((carouselIndex + 1) % PHOTOS.length);
+            else goToSlide((carouselIndex - 1 + PHOTOS.length) % PHOTOS.length);
+          }
+          resumeCarousel();
+        });
+
+        // Arrow buttons
+        $("carouselPrev").onclick = () => {
+          goToSlide((carouselIndex - 1 + PHOTOS.length) % PHOTOS.length);
+          restartAutoplay();
+        };
+        $("carouselNext").onclick = () => {
+          goToSlide((carouselIndex + 1) % PHOTOS.length);
+          restartAutoplay();
+        };
+
+        // Pause on hover
+        track.addEventListener("mouseenter", pauseCarousel);
+        track.addEventListener("mouseleave", resumeCarousel);
+
+        // Initial render
+        positionSlides();
+        startAutoplay();
+      }
+
+      function goToSlide(index) {
+        carouselIndex = index;
+        positionSlides();
+        // Reset progress animation
+        const bar = $("carouselProgress");
+        bar.style.animation = "none";
+        bar.offsetHeight; // reflow
+        bar.style.animation = "carousel-fill 4s linear infinite";
+        if (carouselPaused) bar.classList.add("paused");
+      }
+
+      function positionSlides() {
+        const slides = document.querySelectorAll(".carousel-slide");
+        const total = slides.length;
+
+        slides.forEach((slide, i) => {
+          const offset = i - carouselIndex;
+
+          // Handle wrapping for smooth infinite feel
+          let adjustedOffset = offset;
+          if (offset > total / 2) adjustedOffset = offset - total;
+          if (offset < -total / 2) adjustedOffset = offset + total;
+
+          const absOffset = Math.abs(adjustedOffset);
+
+          if (absOffset > 2) {
+            slide.style.opacity = "0";
+            slide.style.pointerEvents = "none";
+            slide.style.transform = `translateX(${adjustedOffset * 200}px) scale(0.6)`;
+            slide.style.zIndex = "0";
+          } else {
+            const scale =
+              adjustedOffset === 0 ? 1 : 0.75 - (absOffset - 1) * 0.1;
+            const translateX =
+              adjustedOffset * clampVal(140, window.innerWidth * 0.38, 220);
+            const opacity =
+              adjustedOffset === 0 ? 1 : 0.5 - (absOffset - 1) * 0.2;
+            const zIndex = 10 - absOffset;
+            const rotate = adjustedOffset * 3;
+
+            slide.style.transform = `translateX(${translateX}px) scale(${scale}) rotate(${rotate}deg)`;
+            slide.style.opacity = String(Math.max(0.15, opacity));
+            slide.style.zIndex = String(zIndex);
+            slide.style.pointerEvents = adjustedOffset === 0 ? "auto" : "auto";
+          }
+
+          slide.classList.toggle("active", adjustedOffset === 0);
+        });
+
+        // Update dots
+        document.querySelectorAll(".carousel-dot").forEach((dot, i) => {
+          dot.classList.toggle("active", i === carouselIndex);
+        });
+
+        // Update counter
+        $("carouselCounter").textContent = carouselIndex + 1 + " / " + total;
+      }
+
+      function clampVal(min, val, max) {
+        return Math.min(max, Math.max(min, val));
+      }
+
+      function startAutoplay() {
+        carouselAutoplay = setInterval(() => {
+          if (!carouselPaused) {
+            goToSlide((carouselIndex + 1) % PHOTOS.length);
+          }
+        }, 4000);
+      }
+
+      function restartAutoplay() {
+        clearInterval(carouselAutoplay);
+        startAutoplay();
+      }
+
+      function pauseCarousel() {
+        carouselPaused = true;
+        $("carouselProgress").classList.add("paused");
+      }
+
+      function resumeCarousel() {
+        carouselPaused = false;
+        $("carouselProgress").classList.remove("paused");
+      }
+
+      function openLightbox(src) {
+        const overlay = document.createElement("div");
+        overlay.className = "lightbox";
+
+        const img = document.createElement("img");
+        img.src = src;
+        img.alt = "Full view";
+
+        overlay.appendChild(img);
+        overlay.onclick = () => overlay.remove();
+        document.body.appendChild(overlay);
+      }
+
+      // ─── Scripture Carousel ─────────────────────────────────────
+      function initVerses() {
+        const container = $("verseContainer");
+        const dotsContainer = $("verseDots");
+
+        VERSES.forEach((v, i) => {
+          const div = document.createElement("div");
+          div.className = "verse-item" + (i === 0 ? " active" : "");
+          div.id = "verse-" + i;
+          div.innerHTML = `
+          <p class="verse-text">"${v.text}"</p>
+          <p class="verse-ref">— ${v.ref}</p>
+        `;
+          container.appendChild(div);
+
+          const dot = document.createElement("button");
+          dot.className = "verse-dot" + (i === 0 ? " active" : "");
+          dot.onclick = () => setActiveVerse(i);
+          dotsContainer.appendChild(dot);
+        });
+
+        verseInterval = setInterval(() => {
+          setActiveVerse((activeVerse + 1) % VERSES.length);
+        }, 8000);
+      }
+
+      function setActiveVerse(index) {
+        activeVerse = index;
+        document.querySelectorAll(".verse-item").forEach((el, i) => {
+          el.classList.toggle("active", i === index);
+        });
+        document.querySelectorAll(".verse-dot").forEach((el, i) => {
+          el.classList.toggle("active", i === index);
+        });
+
+        // Reset interval
+        if (verseInterval) clearInterval(verseInterval);
+        verseInterval = setInterval(() => {
+          setActiveVerse((activeVerse + 1) % VERSES.length);
+        }, 8000);
+      }
+
+      // ─── Scroll Reveal ──────────────────────────────────────────
+      function initScrollReveal() {
+        const sections = document.querySelectorAll(".reveal-section");
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("visible");
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.1 },
+        );
+
+        sections.forEach((s) => observer.observe(s));
+      }
+
+      // ─── Music ──────────────────────────────────────────────────
+      function toggleMusic() {
+        const music = $("music");
+        const btn = $("musicToggle");
+        if (musicPlaying) {
+          music.pause();
+          musicPlaying = false;
+          btn.textContent = "♪";
+        } else {
+          music
+            .play()
+            .then(() => {
+              musicPlaying = true;
+              btn.textContent = "♫";
+            })
+            .catch(() => {});
+        }
+      }
+
+      // ─── Main Entry Point ───────────────────────────────────────
+      $("enterBtn").onclick = () => {
+        // Try play music
+        const music = $("music");
+        music
+          .play()
+          .then(() => {
+            musicPlaying = true;
+            $("musicToggle").textContent = "♫";
+          })
+          .catch(() => {});
+
+        // Hide intro
+        $("intro").classList.add("hidden");
+
+        // Show effects
+        $("fireflies").classList.remove("hidden");
+        $("petals").classList.remove("hidden");
+        createFireflies();
+        createPetals();
+
+        // Show music toggle
+        $("musicToggle").classList.remove("hidden");
+
+        // Show typing section
+        $("typingSection").classList.remove("hidden");
+
+        // Start typewriter
+        startTypewriter(
+          ["This is our story.", "Written by God.", "Lived by us."],
+          () => {
+            // Hide typing, show main content
+            $("typingSection").classList.add("hidden");
+            $("mainContent").classList.remove("hidden");
+            $("mainContent").style.animation = "fade-in 1.5s ease-out";
+
+            // Initialize everything
+            renderCounter();
+            setInterval(renderCounter, 60000);
+            initTimeline();
+            initGallery();
+            initVerses();
+
+            // Delay scroll reveal slightly so elements are in DOM
+            setTimeout(initScrollReveal, 100);
+          },
+        );
+      };
+
+      // Music toggle button
+      $("musicToggle").onclick = toggleMusic;
+    </script>
   </body>
 </html>
