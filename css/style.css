@@ -1,0 +1,70 @@
+body {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  background: linear-gradient(#ffd6e8, #ffffff);
+  color: #333;
+  overflow-x: hidden;
+}
+
+.center {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-align: center;
+}
+
+.title {
+  font-family: "Great Vibes", cursive;
+  font-size: 3em;
+  color: #d63384;
+}
+
+.enter-btn {
+  padding: 15px 30px;
+  font-size: 18px;
+  background: #ff99cc;
+  border: none;
+  border-radius: 30px;
+  color: white;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+.card {
+  max-width: 600px;
+  margin: auto;
+  padding: 30px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.gallery {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 20px;
+}
+
+.gallery img {
+  height: 300px;
+  border-radius: 15px;
+}
+
+section {
+  padding: 80px 20px;
+}
+
+body::before {
+  content: "🌸 🌸 🌸";
+  position: fixed;
+  top: 10%;
+  left: 5%;
+  font-size: 30px;
+  opacity: 0.2;
+}

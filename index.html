@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Our Journey</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+    <link rel="stylesheet" href="css/timeline.css" />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=Great+Vibes&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+  </head>
+
+  <body>
+    <div id="heaven"></div>
+    <div id="stars"></div>
+
+    <section id="intro" class="center">
+      <h1 class="title">
+        Our Story<br />
+        Written by God
+      </h1>
+
+      <button id="enterBtn" class="enter-btn">Tap to Begin Our Journey</button>
+    </section>
+
+    <section id="typingSection" class="hidden center">
+      <div id="typed"></div>
+    </section>
+
+    <section id="counterSection" class="hidden center">
+      <h2>Our Time Together</h2>
+      <div id="counter"></div>
+    </section>
+
+    <section id="messageSection" class="hidden">
+      <div class="card">
+        <h2>To My Love</h2>
+
+        <p>
+          Hi my love,<br /><br />
+
+          I want you to know how important you are to me. You've brought so much
+          joy into my life and pushed me to become a better man in every way. I
+          learn so much from you and I have grown deeper in my faith alongside
+          you. I am so grateful for you in my life.
+        </p>
+      </div>
+    </section>
+
+    <section id="timelineSection" class="hidden">
+      <h2>Our Journey</h2>
+
+      <div id="timeline"></div>
+    </section>
+
+    <section id="gallerySection" class="hidden">
+      <h2>Our Memories</h2>
+
+      <div class="gallery">
+        <img src="assets/photos/photo1.jpg" />
+        <img src="assets/photos/photo2.jpg" />
+        <img src="assets/photos/photo3.jpg" />
+        <img src="assets/photos/photo4.jpg" />
+        <img src="assets/photos/photo5.jpg" />
+      </div>
+    </section>
+
+    <section id="versesSection" class="hidden">
+      <h2>God at the Center</h2>
+
+      <div id="verses"></div>
+    </section>
+
+    <section id="finalSection" class="hidden center">
+      <h2>
+        I choose you now and forever,<br />
+        and thank God for you everyday.
+      </h2>
+    </section>
+
+    <script src="data/config.js"></script>
+    <script src="data/timeline.js"></script>
+    <script src="data/verses.js"></script>
+
+    <script src="js/main.js"></script>
+    <script src="js/typing.js"></script>
+    <script src="js/countdown.js"></script>
+    <script src="js/gallery.js"></script>
+    <script src="js/stars.js"></script>
+    <audio id="music" loop>
+      <source src="assets/music/until-i-found-you.mp3" type="audio/mp3" />
+    </audio>
+  </body>
+</html>
